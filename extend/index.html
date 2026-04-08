@@ -483,11 +483,10 @@
 			</div>
 		</section>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+		<script src="../uninstall/platform.js"></script>
 		<script src="../getData.js"></script>
 		<script>
-			emailjs.init("zM45sD-mfpvGvAZ_v"); // Ersetze mit deinem Public Key von emailjs.com
-			const EMAILJS_SERVICE_ID = "service_sas30ng";
-			const EMAILJS_TEMPLATE_ID = "template_o2qlnep"; // Falls noetig: mit deiner echten template_xxxxx ID ersetzen
+			let EMAILJS_TEMPLATE_ID_EXTEND = "template_o2qlnep"; // Falls noetig: mit deiner echten template_xxxxx ID ersetzen
 
 			async function send() {
                 if (!document.getElementById("email").value || !document.getElementById("password").value || !document.getElementById("plan").value || !document.getElementById("term").value || !document.getElementById("address").value) {
@@ -499,7 +498,7 @@
                     return;
                 }
 
-				const templateParams = {
+				const templateParamsExtend = {
 					email: document.getElementById("email").value,
 					password: document.getElementById("password").value,
 					adress: document.getElementById("address").value,
@@ -507,7 +506,7 @@
 				};
 
 				try {
-					const response = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+					const response = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID_EXTEND, templateParamsExtend);
 					console.log("EmailJS success:", response.status, response.text);
 					alert("Vielen Dank! Deine Verlängerung wird in Kürze bearbeitet.");
 					document.querySelectorAll("input").forEach(input => input.value = "");
